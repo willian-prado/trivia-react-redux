@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 
@@ -24,16 +23,6 @@ class Login extends Component {
     const resolve = await response.json();
     localStorage.setItem('token', JSON.stringify(resolve.token));
   }
-
-  // async getAvatar() {
-  //   const { email } = this.state;
-  //   const emailHash = md5(email).toString();
-  //   console.log(emailHash);
-
-  //   const response = await fetch(`https://www.gravatar.com/avatar/${emailHash}`);
-  //   const resolve = await response.json();
-  //   localStorage.setItem('token', JSON.stringify(resolve));
-  // }
 
   verifyLength() {
     const { name, email } = this.state;
