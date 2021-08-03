@@ -14,8 +14,9 @@ class Login extends Component {
     };
 
     this.handlerChange = this.handlerChange.bind(this);
-    this.getToken = this.getToken.bind(this);
     this.handlerClick = this.handlerClick.bind(this);
+    this.handlerSettings = this.handlerSettings.bind(this);
+    this.getToken = this.getToken.bind(this);
   }
 
   async getToken() {
@@ -52,6 +53,11 @@ class Login extends Component {
     this.getToken();
   }
 
+  handlerSettings() {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   render() {
     return (
       <div>
@@ -85,6 +91,13 @@ class Login extends Component {
               onClick={ this.handlerClick }
             >
               Jogar
+            </button>
+            <button
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.handlerSettings }
+            >
+              Settings
             </button>
           </div>
         </header>
