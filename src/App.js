@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
+import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
+import Game from './pages/Game';
 
 export default function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route path="/game" component={ Game } />
+    </Switch>
   );
 }

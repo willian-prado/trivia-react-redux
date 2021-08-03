@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import md5 from 'crypto-js/md5';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 
 class Login extends Component {
@@ -12,6 +14,29 @@ class Login extends Component {
     };
 
     this.handlerChange = this.handlerChange.bind(this);
+    this.getToken = this.getToken.bind(this);
+    this.handlerClick = this.handlerClick.bind(this);
+  }
+
+  async getToken() {
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const resolve = await response.json();
+    localStorage.setItem('token', JSON.stringify(resolve.token));
+  }
+
+  // async getAvatar() {
+  //   const { email } = this.state;
+  //   const emailHash = md5(email).toString();
+  //   console.log(emailHash);
+
+  //   const response = await fetch(`https://www.gravatar.com/avatar/${emailHash}`);
+  //   const resolve = await response.json();
+  //   localStorage.setItem('token', JSON.stringify(resolve));
+  // }
+
+  verifyLength() {
+    const { name, email } = this.state;
+    if (name.length > 0 && email.length > 0) return true;
   }
 
   handlerChange({ target }) {
@@ -21,9 +46,10 @@ class Login extends Component {
     });
   }
 
-  verifyLength() {
-    const { name, email } = this.state;
-    if (name.length > 0 && email.length > 0) return true;
+  handlerClick() {
+    const { history } = this.props;
+    history.push('/game');
+    this.getToken();
   }
 
   render() {
@@ -56,6 +82,7 @@ class Login extends Component {
               type="button"
               data-testid="btn-play"
               disabled={ !this.verifyLength() }
+              onClick={ this.handlerClick }
             >
               Jogar
             </button>
@@ -65,5 +92,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default connect()(Login);
