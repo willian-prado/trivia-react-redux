@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import actionSaveQuestions from '../Redux/actions/game';
 import Questions from '../components/Questions';
 
 class Game extends Component {
@@ -17,10 +16,6 @@ class Game extends Component {
     this.handlerClick = this.handlerClick.bind(this);
   }
 
-  componentDidMount() {
-    this.getQuestions();
-  }
-
   getAvatar() {
     const { email } = this.props;
     const emailHash = md5(email).toString();
@@ -32,21 +27,6 @@ class Game extends Component {
         data-testid="header-profile-picture"
       />
     );
-  }
-
-  async getQuestions() {
-    const { saveQuestions } = this.props;
-    const token = JSON.parse(localStorage.getItem('token'));
-    const fetchTrivia = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-    const jsonResponse = await fetchTrivia.json();
-
-    const codeResponse = jsonResponse.response_code;
-    const questions = jsonResponse.results.map((current) => {
-      const allAnswers = [current.correct_answer, ...current.incorrect_answers].sort();
-      return { ...current, all_answers: allAnswers };
-    });
-
-    saveQuestions(questions, codeResponse);
   }
 
   handlerClick({ target }) {
@@ -103,7 +83,7 @@ class Game extends Component {
 Game.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  saveQuestions: PropTypes.func.isRequired,
+  // saveQuestions: PropTypes.func.isRequired,
   responseCode: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string.isRequired,
@@ -119,12 +99,12 @@ Game.propTypes = {
 const mapStateToProps = (state) => ({
   name: state.login.name,
   email: state.login.email,
-  questions: state.game.questions,
-  responseCode: state.game.responseCode,
+  questions: state.questions.questions,
+  responseCode: state.questions.responseCode,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  saveQuestions: (question, code) => dispatch(actionSaveQuestions(question, code)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   saveQuestions: (question, code) => dispatch(actionSaveQuestions(question, code)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, null)(Game);
