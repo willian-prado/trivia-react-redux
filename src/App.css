@@ -56,12 +56,12 @@
   }
 }
 
-.alternativePicked #correct-answer{
+.alternativePicked #correct-answer {
   background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
 }
 
-.alternativePicked .wrongAnswer{
-  background-color:  rgb(255, 0, 0);
-  border: 3px solid rgb(255, 0, 0);
+.alternativePicked .wrongAnswer {
+  background-color: red;
+  border: 3px solid red;
 }
