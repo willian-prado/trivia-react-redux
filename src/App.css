@@ -56,7 +56,7 @@
   }
 }
 
-#correct-answer {
+.alternativePicked .correctAnswer {
   background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
 }

@@ -27,17 +27,19 @@ class Questions extends React.Component {
         <div>
           {allAnswers.map((current, index) => {
             let testId = `wrong-answer-${index - 1}`;
+            let classItem = 'wrongAnswer';
             if (index === 0) {
               testId = 'wrong-answer-0';
             }
             if (current === correctAnswer) {
               testId = 'correct-answer';
+              classItem = 'correctAnswer';
             }
             return (
               <button
                 type="button"
                 data-testid={ testId }
-                className="wrongAnswer"
+                className={ classItem }
                 id={ testId }
                 key={ index }
                 onClick={ handlerClick }
