@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class Game extends Component {
+class Game extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getAvatar = this.getAvatar.bind(this);
+  }
+
   getAvatar() {
-    // const { email } = this.state;
-    const email = 'malatoneot@gmail.com';
+    const { email } = this.props;
     const emailHash = md5(email).toString();
-    console.log(emailHash);
 
-    // const response = await fetch(`https://www.gravatar.com/avatar/${emailHash}`);
-    // const resolve = await response;
-    // console.log(response);
     return (
       <img
         src={ `https://www.gravatar.com/avatar/${emailHash}` }
@@ -21,13 +24,14 @@ export default class Game extends Component {
   }
 
   render() {
+    const { name } = this.props;
     return (
       <header>
         <div>
           { this.getAvatar() }
         </div>
         <p data-testid="header-player-name">
-          NOME:
+          { name }
         </p>
         <span
           data-testid="header-score"
@@ -38,3 +42,15 @@ export default class Game extends Component {
     );
   }
 }
+
+Game.propTypes = {
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  name: state.login.name,
+  email: state.login.email,
+});
+
+export default connect(mapStateToProps, null)(Game);

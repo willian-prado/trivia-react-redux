@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
+import { actionSaveEmail, actionSaveName } from '../Redux/actions/login';
 
 class Login extends Component {
   constructor(props) {
@@ -37,9 +38,12 @@ class Login extends Component {
   }
 
   handlerClick() {
-    const { history } = this.props;
+    const { history, saveEmail, saveName } = this.props;
+    const { email, name } = this.state;
     history.push('/game');
     this.getToken();
+    saveEmail(email);
+    saveName(name);
   }
 
   handlerSettings() {
@@ -97,6 +101,13 @@ class Login extends Component {
 
 Login.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  saveName: PropTypes.func.isRequired,
+  saveEmail: PropTypes.func.isRequired,
 };
 
-export default connect()(Login);
+const mapDispatchToProps = (dispatch) => ({
+  saveEmail: (email) => dispatch(actionSaveEmail(email)),
+  saveName: (name) => dispatch(actionSaveName(name)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
