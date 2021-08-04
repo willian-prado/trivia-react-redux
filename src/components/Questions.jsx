@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 class Questions extends React.Component {
   render() {
-    console.log('render question');
-    const { question: {
-      category,
-      question,
-      correct_answer: correctAnswer,
-      all_answers: allAnswers,
-    } } = this.props;
+    const {
+      question: {
+        category,
+        question,
+        correct_answer: correctAnswer,
+        all_answers: allAnswers,
+      },
+      handlerClick,
+    } = this.props;
     return (
       <section>
         <p
@@ -35,7 +37,10 @@ class Questions extends React.Component {
               <button
                 type="button"
                 data-testid={ testId }
+                className="wrongAnswer"
+                id={ testId }
                 key={ index }
+                onClick={ handlerClick }
               >
                 { current }
               </button>
@@ -55,6 +60,7 @@ Questions.propTypes = {
     incorrect_answers: PropTypes.string.isRequired,
     all_answers: PropTypes.string.isRequired,
   }).isRequired).isRequired,
+  handlerClick: PropTypes.func.isRequired,
 };
 
 export default Questions;

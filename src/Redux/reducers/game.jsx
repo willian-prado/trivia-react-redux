@@ -1,8 +1,25 @@
 import { SAVE_QUESTIONS } from '../actions/actionsType';
 
 const INITIAL_STATE = {
-  questions: [],
-  loading: true,
+  questions: [{
+    category: 'History',
+    type: 'multiple',
+    difficulty: 'medium',
+    question: 'What',
+    correct_answer: '2004',
+    incorrect_answers: [
+      '2006',
+      '2008',
+      '2002',
+    ],
+    all_answers: [
+      '2006',
+      '2008',
+      '2002',
+      '2004',
+    ],
+  }],
+  responseCode: 0,
 };
 
 const game = (state = INITIAL_STATE, action) => {
@@ -11,7 +28,7 @@ const game = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       questions: action.payload,
-      loading: false,
+      responseCode: action.code,
     };
   default:
     return state;

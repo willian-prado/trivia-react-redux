@@ -20,6 +20,8 @@ class Login extends Component {
   }
 
   async getToken() {
+    const token = 'b2d537b4fad415d6f8d27db266720634b7d817f5e43f710b82192ad0d23cac88';
+    localStorage.setItem('token', token);
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const resolve = await response.json();
     localStorage.setItem('token', JSON.stringify(resolve.token));

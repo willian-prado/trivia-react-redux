@@ -14,7 +14,7 @@ class Game extends Component {
     };
 
     this.getAvatar = this.getAvatar.bind(this);
-    // this.handlerClick = this.handlerClick.bind(this);
+    this.handlerClick = this.handlerClick.bind(this);
   }
 
   componentDidMount() {
@@ -40,24 +40,44 @@ class Game extends Component {
     const fetchTrivia = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const jsonResponse = await fetchTrivia.json();
 
+    const codeResponse = jsonResponse.response_code;
     const questions = jsonResponse.results.map((current) => {
       const allAnswers = [current.correct_answer, ...current.incorrect_answers].sort();
       return { ...current, all_answers: allAnswers };
     });
 
-    saveQuestions(questions);
+    saveQuestions(questions, codeResponse);
   }
 
-  // handlerClick() {
-  //   const { questionIndex } = this.state;
-  //   this.setState({
-  //     questionIndex: questionIndex + 1,
-  //   });
-  // }
+  handlerClick({ target }) {
+    const { questionIndex } = this.state;
+    const time = 3000;
+
+    target.parentNode.classList.add('alternativePicked');
+
+    setTimeout(() => {
+      this.setState({
+        questionIndex: questionIndex + 1,
+      });
+      target.parentNode.className = '';
+    }, time);
+  }
+
+  renderQuestion() {
+    const { questionIndex } = this.state;
+    const { questions, responseCode } = this.props;
+    if (responseCode === 0) {
+      return (
+        <Questions
+          question={ questions[questionIndex] }
+          handlerClick={ this.handlerClick }
+        />
+      );
+    }
+    return <p>Carregando</p>;
+  }
 
   render() {
-    const { questionIndex } = this.state;
-    const { questions, loading } = this.props;
     const { name } = this.props;
     return (
       <div>
@@ -74,9 +94,7 @@ class Game extends Component {
             0
           </span>
         </header>
-        { loading === false && questions.length > 0
-          ? <Questions question={ questions[questionIndex] } />
-          : <p>Carregando</p>}
+        {this.renderQuestion()}
       </div>
     );
   }
@@ -86,7 +104,7 @@ Game.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   saveQuestions: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  responseCode: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -102,11 +120,11 @@ const mapStateToProps = (state) => ({
   name: state.login.name,
   email: state.login.email,
   questions: state.game.questions,
-  loading: state.game.loading,
+  responseCode: state.game.responseCode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveQuestions: (question) => dispatch(actionSaveQuestions(question)),
+  saveQuestions: (question, code) => dispatch(actionSaveQuestions(question, code)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
