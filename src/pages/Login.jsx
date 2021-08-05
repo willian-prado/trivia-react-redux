@@ -23,6 +23,13 @@ class Login extends Component {
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const resolve = await response.json();
     localStorage.setItem('token', JSON.stringify(resolve.token));
+    const player = {
+      name: 'Ximbinha',
+      assertions: 4,
+      score: 300,
+      gravatarEmail: 'ximbinha@trybe.com',
+    };
+    localStorage.setItem('player', JSON.stringify(player));
   }
 
   verifyLength() {
