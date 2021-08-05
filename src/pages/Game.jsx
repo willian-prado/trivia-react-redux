@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
+
 import Questions from '../components/Questions';
 
 class Game extends Component {
@@ -12,21 +13,7 @@ class Game extends Component {
       questionIndex: 0,
     };
 
-    this.getAvatar = this.getAvatar.bind(this);
     this.handlerClick = this.handlerClick.bind(this);
-  }
-
-  getAvatar() {
-    const { email } = this.props;
-    const emailHash = md5(email).toString();
-
-    return (
-      <img
-        src={ `https://www.gravatar.com/avatar/${emailHash}` }
-        alt="User avatar"
-        data-testid="header-profile-picture"
-      />
-    );
   }
 
   handlerClick({ target }) {
@@ -58,32 +45,16 @@ class Game extends Component {
   }
 
   render() {
-    const { name } = this.props;
     return (
       <div>
-        <header>
-          <div>
-            { this.getAvatar() }
-          </div>
-          <p data-testid="header-player-name">
-            { name }
-          </p>
-          <span
-            data-testid="header-score"
-          >
-            0
-          </span>
-        </header>
-        {this.renderQuestion()}
+        <Header score={ 0 } />
+        { this.renderQuestion() }
       </div>
     );
   }
 }
 
 Game.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  // saveQuestions: PropTypes.func.isRequired,
   responseCode: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string.isRequired,
@@ -97,14 +68,8 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  name: state.login.name,
-  email: state.login.email,
   questions: state.questions.questions,
   responseCode: state.questions.responseCode,
 });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   saveQuestions: (question, code) => dispatch(actionSaveQuestions(question, code)),
-// });
 
 export default connect(mapStateToProps, null)(Game);
