@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Questions extends React.Component {
+  // eslint-disable-next-line max-lines-per-function
   render() {
     const {
       question: {
@@ -11,6 +12,9 @@ class Questions extends React.Component {
         all_answers: allAnswers,
       },
       handlerClick,
+      handlerNext,
+      answered,
+      alternativePicked,
     } = this.props;
     return (
       <section>
@@ -24,7 +28,7 @@ class Questions extends React.Component {
         >
           { question }
         </p>
-        <div>
+        <div className={ alternativePicked }>
           {allAnswers.map((current, index) => {
             let testId = `wrong-answer-${index - 1}`;
             let classItem = 'wrongAnswer';
@@ -40,6 +44,7 @@ class Questions extends React.Component {
                 type="button"
                 data-testid={ testId }
                 className={ classItem }
+                disabled={ answered }
                 id={ testId }
                 key={ index }
                 onClick={ handlerClick }
@@ -48,6 +53,9 @@ class Questions extends React.Component {
               </button>
             );
           })}
+          { answered
+        && <button type="button" data-testid="btn-next" onClick={ handlerNext }>Próxima</button>}
+
         </div>
       </section>
     );

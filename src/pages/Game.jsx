@@ -11,33 +11,65 @@ class Game extends Component {
 
     this.state = {
       questionIndex: 0,
+      answered: false,
+      timer: 30,
+      alternativePicked: null,
     };
 
     this.handlerClick = this.handlerClick.bind(this);
+    this.handlerNext = this.handlerNext.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
   }
 
-  handlerClick({ target }) {
+  componentDidMount() {
+    this.resetTimer();
+  }
+
+  handlerClick() {
+    this.setState({
+      answered: true,
+      alternativePicked: 'alternativePicked',
+    });
+  }
+
+  handlerNext() {
     const { questionIndex } = this.state;
-    const time = 3000;
+    this.setState({
+      questionIndex: questionIndex + 1,
+      answered: false,
+      alternativePicked: null,
+    }, () => this.resetTimer());
+  }
 
-    target.parentNode.classList.add('alternativePicked');
-
-    setTimeout(() => {
-      this.setState({
-        questionIndex: questionIndex + 1,
+  resetTimer() {
+    this.setState({ timer: 30 });
+    const time = 1000;
+    const intervalId = setInterval(() => {
+      const { timer } = this.state;
+      const newTimer = timer - 1;
+      this.setState({ timer: newTimer }, () => {
+        if (newTimer === 0) {
+          clearInterval(intervalId);
+          this.setState({
+            answered: true,
+            alternativePicked: 'alternativePicked',
+          });
+        }
       });
-      target.parentNode.className = '';
     }, time);
   }
 
   renderQuestion() {
-    const { questionIndex } = this.state;
+    const { questionIndex, answered, alternativePicked } = this.state;
     const { questions, responseCode } = this.props;
     if (responseCode === 0) {
       return (
         <Questions
           question={ questions[questionIndex] }
           handlerClick={ this.handlerClick }
+          handlerNext={ this.handlerNext }
+          answered={ answered }
+          alternativePicked={ alternativePicked }
         />
       );
     }
@@ -45,9 +77,11 @@ class Game extends Component {
   }
 
   render() {
+    const { timer } = this.state;
     return (
       <div>
         <Header score={ 0 } />
+        <div>{ timer }</div>
         { this.renderQuestion() }
       </div>
     );
