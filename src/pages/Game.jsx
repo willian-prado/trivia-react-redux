@@ -13,7 +13,9 @@ class Game extends Component {
       questionIndex: 0,
       answered: false,
       timer: 30,
-      alternativePicked: null,
+      alternativePicked: '',
+      currentScore: 0,
+      currentAssertions: 0,
     };
 
     this.handlerClick = this.handlerClick.bind(this);
@@ -23,22 +25,75 @@ class Game extends Component {
 
   componentDidMount() {
     this.resetTimer();
+    const { name, email } = this.props;
+    const state = { player: {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    },
+    };
+    localStorage.setItem(
+      'state', JSON.stringify(state),
+    );
   }
 
-  handlerClick() {
+  handlerClick({ target }, difficulty) {
+    const { timer, currentScore, currentAssertions } = this.state;
+    let difficultyMultiplier = 1;
+    const hard = 3;
+    const medium = 2;
+    switch (difficulty) {
+    case 'hard':
+      difficultyMultiplier = hard;
+      break;
+    case 'medium':
+      difficultyMultiplier = medium;
+      break;
+    default:
+      break;
+    }
+
+    let score = currentScore;
+    let assertions = currentAssertions;
+    if (target.id === 'correct-answer') {
+      const baseScore = 10;
+      score += baseScore + (timer * difficultyMultiplier);
+      assertions += 1;
+    }
+    const { name, email } = this.props;
+    const state = { player: {
+      name,
+      assertions,
+      score,
+      gravatarEmail: email,
+    },
+    };
+    localStorage.setItem(
+      'state', JSON.stringify(state),
+    );
     this.setState({
       answered: true,
       alternativePicked: 'alternativePicked',
+      currentScore: score,
+      currentAssertions: assertions,
     });
   }
 
   handlerNext() {
     const { questionIndex } = this.state;
+    const maxQuestions = 3;
+    if (questionIndex > maxQuestions) {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
     this.setState({
       questionIndex: questionIndex + 1,
       answered: false,
       alternativePicked: null,
-    }, () => this.resetTimer());
+    }, () => {
+      this.resetTimer();
+    });
   }
 
   resetTimer() {
@@ -77,10 +132,10 @@ class Game extends Component {
   }
 
   render() {
-    const { timer } = this.state;
+    const { timer, currentScore } = this.state;
     return (
       <div>
-        <Header score={ 0 } />
+        <Header score={ currentScore } />
         <div>{ timer }</div>
         { this.renderQuestion() }
       </div>
@@ -99,11 +154,16 @@ Game.propTypes = {
     incorrect_answers: PropTypes.string.isRequired,
     all_answers: PropTypes.string.isRequired,
   }).isRequired).isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questions: state.questions.questions,
   responseCode: state.questions.responseCode,
+  name: state.login.name,
+  email: state.login.email,
 });
 
 export default connect(mapStateToProps, null)(Game);

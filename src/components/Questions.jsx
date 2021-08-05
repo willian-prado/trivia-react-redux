@@ -2,7 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Questions extends React.Component {
-  // eslint-disable-next-line max-lines-per-function
+  renderNextButton() {
+    const { handlerNext } = this.props;
+    return (
+      <button
+        type="button"
+        data-testid="btn-next"
+        onClick={ handlerNext }
+      >
+        Próxima
+      </button>);
+  }
+
   render() {
     const {
       question: {
@@ -10,24 +21,16 @@ class Questions extends React.Component {
         question,
         correct_answer: correctAnswer,
         all_answers: allAnswers,
+        difficulty,
       },
       handlerClick,
-      handlerNext,
       answered,
       alternativePicked,
     } = this.props;
     return (
       <section>
-        <p
-          data-testid="question-category"
-        >
-          { category }
-        </p>
-        <p
-          data-testid="question-text"
-        >
-          { question }
-        </p>
+        <p data-testid="question-category">{category}</p>
+        <p data-testid="question-text">{question}</p>
         <div className={ alternativePicked }>
           {allAnswers.map((current, index) => {
             let testId = `wrong-answer-${index - 1}`;
@@ -47,15 +50,14 @@ class Questions extends React.Component {
                 disabled={ answered }
                 id={ testId }
                 key={ index }
-                onClick={ handlerClick }
+                onClick={ (eventClick) => handlerClick(eventClick, difficulty) }
               >
-                { current }
+                {current}
               </button>
             );
           })}
-          { answered
-        && <button type="button" data-testid="btn-next" onClick={ handlerNext }>Próxima</button>}
-
+          {answered
+            && this.renderNextButton()}
         </div>
       </section>
     );
@@ -70,6 +72,9 @@ Questions.propTypes = {
     incorrect_answers: PropTypes.string.isRequired,
     all_answers: PropTypes.string.isRequired,
   }).isRequired).isRequired,
+  handlerNext: PropTypes.func.isRequired,
+  answered: PropTypes.bool.isRequired,
+  alternativePicked: PropTypes.string.isRequired,
   handlerClick: PropTypes.func.isRequired,
 };
 
