@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import { actionSaveEmail, actionSaveName } from '../Redux/actions/login';
+import actionSaveQuestions from '../Redux/actions/questions';
 
 class Login extends Component {
   constructor(props) {
@@ -23,13 +24,26 @@ class Login extends Component {
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const resolve = await response.json();
     localStorage.setItem('token', JSON.stringify(resolve.token));
-    const player = {
-      name: 'Ximbinha',
-      assertions: 4,
-      score: 300,
-      gravatarEmail: 'ximbinha@trybe.com',
-    };
-    localStorage.setItem('player', JSON.stringify(player));
+    // const player = {
+    //   name: 'Ximbinha',
+    //   assertions: 4,
+    //   score: 300,
+    //   gravatarEmail: 'ximbinha@trybe.com',
+    // };
+    // localStorage.setItem('player', JSON.stringify(player));
+
+    const { saveQuestions } = this.props;
+    const token = JSON.parse(localStorage.getItem('token'));
+    const fetchTrivia = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    const jsonResponse = await fetchTrivia.json();
+
+    const codeResponse = jsonResponse.response_code;
+    const questions = jsonResponse.results.map((current) => {
+      const allAnswers = [current.correct_answer, ...current.incorrect_answers].sort();
+      return { ...current, all_answers: allAnswers };
+    });
+
+    saveQuestions(questions, codeResponse);
   }
 
   verifyLength() {
@@ -110,11 +124,13 @@ Login.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   saveName: PropTypes.func.isRequired,
   saveEmail: PropTypes.func.isRequired,
+  saveQuestions: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   saveEmail: (email) => dispatch(actionSaveEmail(email)),
   saveName: (name) => dispatch(actionSaveName(name)),
+  saveQuestions: (question, code) => dispatch(actionSaveQuestions(question, code)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
