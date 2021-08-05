@@ -7,30 +7,23 @@ class FeedBack extends Component {
   constructor(props) {
     super(props);
 
-    // player = {
-    //   name,
-    //   assertions,
-    //   score,
-    //   gravatarEmail
-    // }
     this.playAgain = this.playAgain.bind(this);
     this.ranking = this.ranking.bind(this);
     this.getInfo = this.getInfo.bind(this);
   }
 
-  // getInfo() {
-  //   // Desenvolver função para pegar os valores do LocalStorage
-  //   const value = 3;
-  //   // // const mc = 1;
-  //   // const getPoints = JSON.parse(localStorage.getItem('player'));
-  //   // // const { player } = getPoints;
-  //   // const { assertions } = player;
+  getInfo() {
+    // Desenvolver função para pegar os valores do LocalStorage
+    const value = 3;
+    const getPoints = JSON.parse(localStorage.getItem('state'));
+    const { player } = getPoints;
+    const { assertions } = player;
 
-  //   if (assertions < value) {
-  //     return ('Podia ser melhor');
-  //   }
-  //   return ('Mandou bem');
-  // }
+    if (assertions < value) {
+      return ('Podia ser melhor...');
+    }
+    return ('Mandou bem!');
+  }
 
   playAgain() {
     const { history } = this.props;
@@ -43,24 +36,29 @@ class FeedBack extends Component {
   }
 
   render() {
-    // const getPoints = JSON.parse(localStorage.getItem('player'));
-    // const { player } = getPoints;
+    const getPoints = JSON.parse(localStorage.getItem('state'));
+    const { player } = getPoints;
+    console.log(player);
 
     return (
       <div>
-        <Header />
-        <div data-testid="feedback-total-score">
+        <Header score={ player.score } />
+        <div>
           <p data-testid="feedback-text">
             { this.getInfo() }
           </p>
-          <p data-testid="feedback-total-score">
+          <p>
             Você acertou
-            {/* { player.score } */}
+            <span data-testid="feedback-total-score">
+              { player.score }
+            </span>
             !
           </p>
           <p>
             Um total de
-            {/* {player.assertions} */}
+            <span data-testid="feedback-total-question">
+              {player.assertions}
+            </span>
           </p>
         </div>
         <button
