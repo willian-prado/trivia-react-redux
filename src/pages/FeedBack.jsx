@@ -43,18 +43,22 @@ class FeedBack extends Component {
     return (
       <div>
         <Header score={ player.score } />
-        <div data-testid="feedback-total-score">
+        <div>
           <p data-testid="feedback-text">
             { this.getInfo() }
           </p>
-          <p data-testid="feedback-total-score">
+          <p>
             Você acertou
-            { player.score }
+            <span data-testid="feedback-total-score">
+              { player.score }
+            </span>
             !
           </p>
           <p>
             Um total de
-            {player.assertions}
+            <span data-testid="feedback-total-question">
+              {player.assertions}
+            </span>
           </p>
         </div>
         <button
