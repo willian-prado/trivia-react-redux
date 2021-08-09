@@ -128,16 +128,18 @@ class Game extends Component {
         />
       );
     }
-    return <p>Carregando</p>;
+    return <p className="">Carregando</p>;
   }
 
   render() {
     const { timer, currentScore } = this.state;
     return (
-      <div>
+      <div className="container-game-screen">
         <Header score={ currentScore } />
-        <div>{ timer }</div>
-        { this.renderQuestion() }
+        <div className="timer-div">
+          <span className="container-timer">{ timer }</span>
+          { this.renderQuestion() }
+        </div>
       </div>
     );
   }

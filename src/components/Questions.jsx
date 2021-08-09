@@ -9,6 +9,7 @@ class Questions extends React.Component {
         type="button"
         data-testid="btn-next"
         onClick={ handlerNext }
+        id="next-button"
       >
         Próxima
       </button>);
@@ -28,7 +29,7 @@ class Questions extends React.Component {
       alternativePicked,
     } = this.props;
     return (
-      <section>
+      <section className="container-questions">
         <p data-testid="question-category">{category}</p>
         <p data-testid="question-text">{question}</p>
         <div className={ alternativePicked }>

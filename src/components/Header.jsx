@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import logo from '../trivia.png';
 
 class Header extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Header extends Component {
         src={ `https://www.gravatar.com/avatar/${emailHash}` }
         alt="User avatar"
         data-testid="header-profile-picture"
+        className="avatar-header"
       />
     );
   }
@@ -26,18 +28,29 @@ class Header extends Component {
   render() {
     const { name, score } = this.props;
     return (
-      <header>
-        <div>
+      <header className="container-header">
+        <div className="container-childdren-header">
           { this.getAvatar() }
         </div>
-        <p data-testid="header-player-name">
-          { name }
+        <p className="container-childdren-header">
+          Nome:
+          <span
+            data-testid="header-player-name"
+            className="name-player container-childdren-header"
+          >
+            { name }
+          </span>
         </p>
-        <span
-          data-testid="header-score"
-        >
-          {score}
-        </span>
+        <p className="container-childdren-header">
+          Pontuação:
+          <span
+            data-testid="header-score"
+            className="score-header container-childdren-header"
+          >
+            {score}
+          </span>
+        </p>
+        <img src={ logo } className="App-logo imagem-header-trivia" alt="logo" />
       </header>
     );
   }
