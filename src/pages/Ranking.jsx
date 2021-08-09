@@ -68,26 +68,30 @@ class Ranking extends Component {
     const { ranking } = this.state;
     console.log(ranking);
     return (
-      <div>
+      <div className="container-ranking">
         <h2 data-testid="ranking-title">Ranking</h2>
-        <ol>
-          {ranking.map(({ name, score, picture }, index) => (
-            <li key={ index }>
-              <img
-                src={ picture }
-                alt="User avatar"
-              />
-              <p data-testid={ `player-name-${index}` }>{name}</p>
-              <p data-testid={ `player-score-${index}` }>{score}</p>
-            </li>))}
-        </ol>
-        <button
-          type="button"
-          onClick={ this.handleClick }
-          data-testid="btn-go-home"
-        >
-          Página inicial
-        </button>
+        <div className="container-list">
+          <ol className="list-map">
+            {ranking.map(({ name, score, picture }, index) => (
+              <li key={ index }>
+                <img
+                  src={ picture }
+                  alt="User avatar"
+                />
+                <p data-testid={ `player-name-${index}` }>{name}</p>
+                <p data-testid={ `player-score-${index}` }>{score}</p>
+              </li>))}
+          </ol>
+        </div>
+        <div className="button-ranking">
+          <button
+            type="button"
+            onClick={ this.handleClick }
+            data-testid="btn-go-home"
+          >
+            Página inicial
+          </button>
+        </div>
       </div>
     );
   }

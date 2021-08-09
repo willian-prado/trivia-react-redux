@@ -43,39 +43,42 @@ class FeedBack extends Component {
     return (
       <div>
         <Header score={ player.score } />
-        <div>
+        <div className="container-feedback">
           <p data-testid="feedback-text">
             { this.getInfo() }
           </p>
           <p>
-            Você acertou
+            Você fez
             <span data-testid="feedback-total-score">
               { player.score }
             </span>
-            !
+            pontos!
           </p>
           <p>
-            Um total de
+            Acertou um total de
             <span data-testid="feedback-total-question">
               {player.assertions}
             </span>
+            resposta(s)
           </p>
         </div>
-        <button
-          type="button"
-          onClick={ this.ranking }
-          data-testid="btn-ranking"
-        >
-          Ver Ranking
-        </button>
+        <div className="button-feedback">
+          <button
+            type="button"
+            onClick={ this.ranking }
+            data-testid="btn-ranking"
+          >
+            Ver Ranking
+          </button>
 
-        <button
-          type="button"
-          onClick={ this.playAgain }
-          data-testid="btn-play-again"
-        >
-          Jogar Novamente
-        </button>
+          <button
+            type="button"
+            onClick={ this.playAgain }
+            data-testid="btn-play-again"
+          >
+            Jogar Novamente
+          </button>
+        </div>
       </div>
     );
   }

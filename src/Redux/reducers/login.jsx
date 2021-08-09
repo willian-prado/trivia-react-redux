@@ -1,8 +1,8 @@
 import { SAVE_NAME, SAVE_EMAIL } from '../actions/actionsType';
 
 const INITIAL_STATE = {
-  name: '',
-  email: '',
+  name: 'Ximbinha',
+  email: 'ximbinha@tryber.calipso.br',
 };
 
 const login = (state = INITIAL_STATE, action) => {

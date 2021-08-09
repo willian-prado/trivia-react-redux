@@ -77,7 +77,7 @@ class Login extends Component {
       <div>
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
-          <div>
+          <div className="container-login">
             <label htmlFor="input-player-name">
               <input
                 type="text"
@@ -98,21 +98,23 @@ class Login extends Component {
                 onChange={ this.handlerChange }
               />
             </label>
-            <button
-              type="button"
-              data-testid="btn-play"
-              disabled={ !this.verifyLength() }
-              onClick={ this.handlerClick }
-            >
-              Jogar
-            </button>
-            <button
-              type="button"
-              data-testid="btn-settings"
-              onClick={ this.handlerSettings }
-            >
-              Settings
-            </button>
+            <div className="container-button-login">
+              <button
+                type="button"
+                data-testid="btn-play"
+                disabled={ !this.verifyLength() }
+                onClick={ this.handlerClick }
+              >
+                Jogar
+              </button>
+              <button
+                type="button"
+                data-testid="btn-settings"
+                onClick={ this.handlerSettings }
+              >
+                Settings
+              </button>
+            </div>
           </div>
         </header>
       </div>
