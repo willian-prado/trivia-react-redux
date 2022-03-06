@@ -2,7 +2,7 @@
 
 > Sétimo projeto do módulo de Front-end do curso de desenvolvimento web da Trybe.
 
-Segundo projeto em grupo do módulo de Front-end, focado novamente na prática de metodologias ágeis e também nos conteúdos de React e Redux vistos até esse ponto.
+Esse é o nosso segundo projeto em grupo do módulo de Front-end, focado novamente na prática de metodologias ágeis e também nos conteúdos de React e Redux vistos até esse ponto.
 Um quadro no aplicativo Trello foi usado como ferramenta Kanban, onde os requisitos do projeto foram divididos entre os membros do grupo.
 Alguns requisitos eram pré-requisitos básicos para a aplicação e foram desenvolvidos em grupo ou em *pair-programming*.
 
