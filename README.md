@@ -41,7 +41,7 @@ As perguntas e respostas são obtidas via [API do Trivia](https://opentdb.com/ap
 
 ---
 
-### Lista de requisitos propostos:
+### Lista de requisitos propostos pela Trybe:
 
 #### Obrigatórios
 
