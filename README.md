@@ -1,6 +1,6 @@
 ## Projeto Trivia
 
-> Sétimo projeto do módulo de Front-end do curso de desenvolvimento web da Trybe.
+> Sétimo projeto do módulo de Front-end do curso de desenvolvimento web da [Trybe](https://www.betrybe.com/)
 
 **Contexto**
 
@@ -17,7 +17,7 @@ O jogo consiste em uma sequência de perguntas e respostas. Cada pergunta possui
 Ao final de cada jogo, é possível acessar o ranking com as melhores pontuações registradas.
 As perguntas e respostas são obtidas via [API do Trivia](https://opentdb.com/api_config.php).
 
-**Principais habilidades desenvolvidas nesse trabalho:**
+**Principais habilidades desenvolvidas nesse trabalho**
 
   - Criar um store Redux em aplicações React
   - Criar reducers no Redux em aplicações React
@@ -37,7 +37,7 @@ As perguntas e respostas são obtidas via [API do Trivia](https://opentdb.com/ap
 - <a href="https://redux.js.org"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" title="Redux" height="30" align="center"/>  - Redux</a>
 - <a href="https://trello.com/"><img src="https://trackingtime.co/wp-content/themes/trackingtime-v4/img/temp/logos/trello.png" title="Trello" height="30" align="center"/>  - Trello</a>
 
-*Projeto desenvolvido em grupo com Antônio Malato, Eduardo Ribeiro, Emerson Filho, Guilherme Cesconeto*
+*Projeto desenvolvido em grupo com [Antônio Malato](https://github.com/antoniomalato), [Eduardo Ribeiro](https://github.com/duribeiro), [Emerson Filho](https://github.com/Emerson-MM-Filho) e [Guilherme Cesconeto](https://github.com/gcesconeto).*
 
 ---
 
@@ -75,3 +75,7 @@ As perguntas e respostas são obtidas via [API do Trivia](https://opentdb.com/ap
 ##### 21. Ao mudar o valor do dropdown tipo, apenas perguntas do tipo selecionado devem aparecer para a pessoa que está jogando. Essa configuração será identificada pela chave type no retorno da API.
 
 ***Obs: A maneira como a API deve ser estruturada segue o seguinte modelo: https://opentdb.com/api_config.php***
+
+---
+
+[Ir para a lista de projetos](https://github.com/willian-prado/trybe-records)
